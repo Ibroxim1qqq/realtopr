@@ -32,7 +32,7 @@ from bot.loader import bot
 async def submit_request(data: ClientRequest):
     try:
         req_id = db.add_request({
-            "type": data.request_type,
+            "type": data.request_type.lower(),
             "region": data.region,
             "rooms": data.rooms,
             "price": data.price,
