@@ -76,11 +76,13 @@ async def admin_action(req_id: str = Form(...), action: str = Form(...)):
                     f"📞 Aloqa uchun botga kiring: @sotuuzbot"
                 )
                 
-                if CHANNEL_ID and str(CHANNEL_ID).startswith("-100"):
+                if CHANNEL_ID:
                     try:
-                        await bot.send_message(chat_id=CHANNEL_ID, text=public_msg)
+                        # Convert to int if it's a numeric string (common for IDs)
+                        target_chat = int(CHANNEL_ID) if str(CHANNEL_ID).replace('-', '').isdigit() else CHANNEL_ID
+                        await bot.send_message(chat_id=target_chat, text=public_msg)
                     except Exception as e:
-                        logging.error(f"Failed to send to channel {CHANNEL_ID}: {e}")
+                        logging.error(f"Failed to send to channel {CHANNEL_ID}: {e}. Check if bot is Admin!")
                 
                 # 4. Broadcast to Targeted Realtors
                 r_type_filter = data['request_type']

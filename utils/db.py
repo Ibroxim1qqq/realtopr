@@ -87,6 +87,10 @@ class GoogleSheet:
         return None
 
     def add_realtor(self, telegram_id, full_name, region, r_type, phone):
+        # Normalize
+        region = region.strip().lower()
+        r_type = r_type.strip().lower()
+
         if self.is_mock:
             for r in self.mock_data["realtors"]:
                 if str(r.get("telegram_id")) == str(telegram_id): return False
