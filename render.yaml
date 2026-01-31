@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: uysot-bot
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python main.py
+    envVars:
+      - key: PORT
+        value: 8002
+      - key: BOT_TOKEN
+        sync: false
+      - key: SHEET_URL
+        sync: false
+      - key: ADMIN_IDS
+        sync: false
+      - key: CHANNEL_ID
+        sync: false
+      - key: GOOGLE_CREDENTIALS_JSON
+        sync: false
