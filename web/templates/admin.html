@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - UySot</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        .admin-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            color: var(--text-sec);
+            font-size: 14px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 16px;
+            border-bottom: 1px solid var(--bg-color);
+        }
+
+        th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: var(--text-sec);
+        }
+
+        .action-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .form-inline {
+            display: flex;
+            gap: 8px;
+        }
+
+        .form-inline input {
+            width: 80px;
+            padding: 6px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="admin-container">
+        <header style="text-align: left;">
+            <h1>Admin Dashboard</h1>
+        </header>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value">{{ daily_requests }}</div>
+                <div class="stat-label">Bugungi so'rovlar</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">{{ daily_sales }}</div>
+                <div class="stat-label">Sotilgan kontaktlar</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">{{ total_realtors }}</div>
+                <div class="stat-label">Rieltorlar</div>
+            </div>
+        </div>
+
+        <div class="section" style="margin-bottom: 20px;">
+            <label class="section-title">Diagnostics</label>
+            <div class="stat-card" style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <strong>Configured Channel ID:</strong> {{ channel_id }} <br>
+                    <small style="color: {{ 'green' if channel_id_valid else 'red' }}">
+                        {{ 'Valid Format' if channel_id_valid else 'Invalid Format (Must start with -100)' }}
+                    </small>
+                </div>
+                <!-- TODO: Add Test Button functionality -->
+                <a href="#" class="action-btn"
+                    onclick="alert('Please configure a valid ID first!'); return false;">Check Config</a>
+            </div>
+        </div>
+
+        <div class="section" style="margin-bottom: 20px;">
+            <label class="section-title">Yangi So'rovlar (Moderatsiya)</label>
+            {% if pending_requests %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Turi</th>
+                        <th>Tuman</th>
+                        <th>Xonalar</th>
+                        <th>Narx</th>
+                        <th>Harakat</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for req in pending_requests %}
+                    <tr>
+                        <!-- req is a dict: {'id': ..., 'type': ..., ...} -->
+                        <td>{{ req.id }}</td>
+                        <td>{{ req.type }}</td>
+                        <td>{{ req.region }}</td>
+                        <td>{{ req.rooms }}</td>
+                        <td>{{ req.price }}</td>
+                        <td>
+                            <div class="form-inline">
+                                <form action="/admin/action" method="post">
+                                    <input type="hidden" name="req_id" value="{{ req.id }}">
+                                    <input type="hidden" name="action" value="approve">
+                                    <button type="submit" class="action-btn"
+                                        style="background-color: #28a745;">Tasdiqlash</button>
+                                </form>
+                                <form action="/admin/action" method="post">
+                                    <input type="hidden" name="req_id" value="{{ req.id }}">
+                                    <input type="hidden" name="action" value="reject">
+                                    <button type="submit" class="action-btn" style="background-color: #dc3545;">Rad
+                                        etish</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p style="color: grey; padding: 20px;">Hozircha yangi so'rovlar yo'q.</p>
+            {% endif %}
+        </div>
+
+        <div class="section">
+            <label class="section-title">Rieltorlar Balansi</label>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Ism</th>
+                        <th>Telefon</th>
+                        <th>Tuman</th>
+                        <th>Balans</th>
+                        <th>Harakat</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for r in realtors %}
+                    <tr>
+                        <td>{{ r.telegram_id }}</td>
+                        <td>{{ r.full_name }}</td>
+                        <td>{{ r.phone }}</td>
+                        <td>{{ r.region }}</td>
+                        <td>{{ r.balance }} so'm</td>
+                        <td>
+                            <form action="/admin/balance" method="post" class="form-inline">
+                                <input type="hidden" name="telegram_id" value="{{ r.telegram_id }}">
+                                <input type="number" name="amount" placeholder="+/-" required>
+                                <button type="submit" class="action-btn">Yangilash</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>

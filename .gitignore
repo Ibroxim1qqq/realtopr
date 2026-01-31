@@ -1,0 +1,19 @@
+# Sensitive data
+.env
+*.json
+!requirements.txt
+!Procfile
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+
+# Logs
+*.txt
+!requirements.txt
+
+# IDEs
+.vscode/
+.idea/

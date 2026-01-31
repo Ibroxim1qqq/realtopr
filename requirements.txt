@@ -1,0 +1,9 @@
+aiogram>=3.0
+fastapi
+uvicorn
+jinja2
+gspread
+oauth2client
+python-dotenv
+requests
+python-multipart

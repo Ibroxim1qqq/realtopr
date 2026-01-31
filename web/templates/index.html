@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UySot - Kvartiralar va Uylar</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">🏠</span>
+                <span class="logo-text">UYSOT</span>
+            </div>
+            <div class="nav-links">
+                <a href="#" class="active">Kvartiralar</a>
+                <a href="#">Uylar</a>
+                <a href="#">Tijorat</a>
+                <a href="#">Yangiliklar</a>
+            </div>
+            <div class="nav-actions">
+                <button class="lang-btn">🇺🇿 UZ</button>
+                <button class="login-btn">Kirish</button>
+                <button class="add-ad-btn">+ E'lon berish</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Filters Bar -->
+    <div class="filters-bar">
+        <div class="filter-container">
+            <div class="filter-group">
+                <button class="filter-chip active">Sotish</button>
+                <button class="filter-chip">Ijara</button>
+            </div>
+            <div class="filter-input">
+                <span class="icon">📍</span>
+                <input type="text" placeholder="Toshkent shahri">
+            </div>
+            <div class="filter-input">
+                <span class="icon">🔢</span>
+                <input type="text" placeholder="Xonalar">
+            </div>
+            <div class="filter-input">
+                <span class="icon">💰</span>
+                <input type="text" placeholder="Narx">
+            </div>
+            <button class="search-btn">Qidirish</button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-container">
+
+        <div class="content-header">
+            <h1>Toshkentda ko'chmas mulk sotib olish</h1>
+            <div class="sort-options">
+                <span>34 295 ta e'lon</span>
+                <select>
+                    <option>Saralash: Tavsiya etilgan</option>
+                    <option>Arzonroq</option>
+                    <option>Qimmatroq</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="listings-grid">
+
+            <!-- SPECIAL CARD: REQUEST FORM -->
+            <!-- This card takes the place of the first listing -->
+            <div class="listing-card special-form-card">
+                <div class="form-header">
+                    <h3>🔍 O'z uyingizni tez toping!</h3>
+                    <p>Minglab e'lonlarni qidirib vaqt yo'qotmang. Talabingizni qoldiring, rieltorlar o'zi aloqaga
+                        chiqadi.</p>
+                </div>
+                <form id="requestForm" class="embedded-form">
+                    <div class="form-row">
+                        <select name="request_type" required>
+                            <option value="Sotib olish">Sotib olish</option>
+                            <option value="Ijaraga olish">Ijaraga olish</option>
+                        </select>
+                        <select name="region" required>
+                            <option value="" disabled selected>Tuman</option>
+                            <option value="Chilonzor">Chilonzor</option>
+                            <option value="Yunusobod">Yunusobod</option>
+                            <option value="Mirzo Ulug'bek">Mirzo Ulug'bek</option>
+                            <option value="Yashnobod">Yashnobod</option>
+                            <!-- Add other districts -->
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <select name="rooms" required>
+                            <option value="" disabled selected>Xona</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4+">4+</option>
+                        </select>
+                        <select name="price" required>
+                            <option value="" disabled selected>Narx</option>
+                            <option value="200-400">$200 - $400</option>
+                            <option value="400-600">$400 - $600</option>
+                            <option value="600-1000">$600 - $1000</option>
+                            <option value="20000+">$20,000+</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <input type="tel" name="phone" placeholder="+998 90 123 45 67" required>
+                    </div>
+                    <button type="submit" class="submit-btn" id="submitBtn">✨ So'rov yuborish</button>
+                </form>
+            </div>
+
+            <!-- DUMMY LISTINGS -->
+            <!-- Card 2 -->
+            <div class="listing-card">
+                <div class="card-image" style="background-color: #e0e0e0;">
+                    <span class="badge">Top</span>
+                    <!-- Placeholder logic if no images -->
+                    <div class="img-placeholder">🏠</div>
+                </div>
+                <div class="card-content">
+                    <div class="price">750.9 mln so'm</div>
+                    <div class="specs">3-xona • 76.37 m² • 16-qavat</div>
+                    <div class="address">Toshkent, Yashnobod tumani</div>
+                    <div class="agent">
+                        <div class="avatar">SK</div>
+                        <div>
+                            <div class="agent-name">Sher KW</div>
+                            <div class="agent-role">Rieltor</div>
+                        </div>
+                    </div>
+                    <button class="details-btn">Batafsil</button>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="listing-card">
+                <div class="card-image" style="background-color: #d6d6d6;">
+                    <div class="img-placeholder">🏢</div>
+                </div>
+                <div class="card-content">
+                    <div class="price">488.0 mln so'm</div>
+                    <div class="specs">4-xona • 24 sotik • Hovli</div>
+                    <div class="address">Toshkent vil., Quyi Chirchiq</div>
+                    <div class="agent">
+                        <div class="avatar">AM</div>
+                        <div>
+                            <div class="agent-name">Agabek M</div>
+                            <div class="agent-role">Ega</div>
+                        </div>
+                    </div>
+                    <button class="details-btn">Batafsil</button>
+                </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="listing-card">
+                <div class="card-image" style="background-color: #cccccc;">
+                    <div class="img-placeholder">🏙️</div>
+                </div>
+                <div class="card-content">
+                    <div class="price">$55,000</div>
+                    <div class="specs">2-xona • 54 m² • 4-qavat</div>
+                    <div class="address">Toshkent, Chilonzor 7-kvartal</div>
+                    <div class="agent">
+                        <div class="avatar">NB</div>
+                        <div>
+                            <div class="agent-name">Nodir B</div>
+                            <div class="agent-role">Rieltor</div>
+                        </div>
+                    </div>
+                    <button class="details-btn">Batafsil</button>
+                </div>
+            </div>
+            <!-- Card 5 -->
+            <div class="listing-card">
+                <div class="card-image" style="background-color: #c0c0c0;">
+                    <div class="img-placeholder">🏘️</div>
+                </div>
+                <div class="card-content">
+                    <div class="price">$500 / oy</div>
+                    <div class="specs">2-xona • 70 m² • 9-qavat</div>
+                    <div class="address">Toshkent, Yunusobod 14</div>
+                    <div class="agent">
+                        <div class="avatar">AB</div>
+                        <div>
+                            <div class="agent-name">Aziz B</div>
+                            <div class="agent-role">Rieltor</div>
+                        </div>
+                    </div>
+                    <button class="details-btn">Batafsil</button>
+                </div>
+            </div>
+
+            <!-- Card 6 -->
+            <div class="listing-card">
+                <div class="card-image" style="background-color: #b0b0b0;">
+                    <div class="img-placeholder">🏡</div>
+                </div>
+                <div class="card-content">
+                    <div class="price">1.2 mlrd so'm</div>
+                    <div class="specs">3-xona • 90 m² • 3-qavat</div>
+                    <div class="address">Toshkent, Mirobod, Oybek</div>
+                    <div class="agent">
+                        <div class="avatar">JS</div>
+                        <div>
+                            <div class="agent-name">Jasur S</div>
+                            <div class="agent-role">Rieltor</div>
+                        </div>
+                    </div>
+                    <button class="details-btn">Batafsil</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <div class="success-icon">✅</div>
+            <h2>So'rov qabul qilindi!</h2>
+            <p>Sizning so'rovingiz tumaningizdagi eng yaxshi rieltorlarga yuborildi. Ular tez orada siz bilan
+                bog'lanishadi.</p>
+            <button onclick="closeModal()">Yopish</button>
+        </div>
+    </div>
+
+    <script src="/static/js/main.js"></script>
+</body>
+
+</html>
